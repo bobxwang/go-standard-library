@@ -1,9 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -107,5 +111,27 @@ func main() {
 		} else {
 			fmt.Println(n)
 		}
+	}
+
+	if 1 > 4 {
+		// 模拟linux的cat命令
+		flag.Parse()
+		fmt.Println(flag.Arg((0)))
+		f, err := os.Open(flag.Arg(0))
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "reading from %s failed, err:%v\n", flag.Arg(0), err)
+		}
+		cat(bufio.NewReader(f))
+	}
+}
+
+// 模拟cat命令
+func cat(r *bufio.Reader) {
+	for {
+		buf, err := r.ReadBytes('\n') //注意是字符
+		if err == io.EOF {
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s", buf)
 	}
 }
