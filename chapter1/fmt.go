@@ -123,6 +123,14 @@ func main() {
 		}
 		cat(bufio.NewReader(f))
 	}
+
+	if 1 > 4 {
+		// 指针
+		a := 10
+		b := &a
+		c := *b
+		fmt.Println(a == c)
+	}
 }
 
 // 模拟cat命令
